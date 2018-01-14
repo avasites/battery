@@ -10,13 +10,17 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class MainActivity extends AppCompatActivity {
 
-    long mills = 1000L;
-
-    TextView tv;
-
     public class PowerConnectionReceiver extends BroadcastReceiver {
+
+        long mills = 2000L;
+
+        float level = 30.0f;
+
+        TextView tv;
+
         @Override
         public void onReceive(Context context, Intent intent) {
             int status = intent.getIntExtra("level", -1);
@@ -33,13 +37,14 @@ public class MainActivity extends AppCompatActivity {
 
             tv.setText(Float.toString(status));
 
-            if(status >= 58.0){
+            if(status >= level){
                 Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(mills);
                 Toast.makeText(getApplicationContext(), "Хватит заряжать", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
